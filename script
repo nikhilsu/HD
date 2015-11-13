@@ -5,9 +5,9 @@ then
 	ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 fi
 
-brew list sl &>brew
-sl=$(cat brew|grep "Error")
-rm -rf brew
+brew list sl &>brewStatusFile
+sl=$(cat brewStatusFile|grep "Error")
+rm -rf brewStatusFile
 installed=0
 
 if [ "$sl" != "" ]
