@@ -1,6 +1,6 @@
 #!/bin/bash
 
-mv script.sh /usr/local/bin/script.sh
+mv startBashOnly.sh /usr/local/bin/startBashOnly.sh
 
 echo -e "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
 <!DOCTYPE plist PUBLIC \"-//Apple//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\">
@@ -11,20 +11,20 @@ echo -e "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
         
     <key>ThrottleInterval</key>
         <integer>30</integer>
-    
+
     <key>ProgramArguments</key>
         <array>
-                <string>/usr/local/bin/script.sh</string>
+                <string>/usr/local/bin/startBashOnly.sh</string>
         </array>
     
     <key>StartInterval</key>
         <integer>30</integer>
         
     <key>StandardErrorPath</key>
-        <string>~/IPerror.err</string>
+        <string>/tmp/IPerror.err</string>
     
     <key>StandardOutPath</key>
-        <string>~/IPoutput.out</string>
+        <string>/tmp/IPoutput.out</string>
     
     <key>KeepAlive</key>
         <true/>
@@ -32,6 +32,8 @@ echo -e "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
 </plist>"|cat>script.plist
 
 chmod +x script.plist
-mv script.plist ~/Library/LaunchAgents/
+mv script.plist ~/Library/LaunchAgents/script.plist
 
 launchctl load ~/Library/LaunchAgents/script.plist
+
+rm -f startDaemon.sh
