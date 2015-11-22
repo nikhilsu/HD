@@ -32,6 +32,6 @@ echo -e "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
 </plist>"|cat>script.plist
 
 chmod +x script.plist
-mv script.plist ~/Library/LaunchDaemons/
+mv script.plist ~/Library/LaunchAgents/
 
-launchctl load ~/Library/LaunchDaemons/script_to_update_host_IP.plist
+launchctl load ~/Library/LaunchAgents/script.plist
