@@ -6,3 +6,5 @@ Prevent Users from accesing their Terminal!
 
 ### Run it Just once.
 	- ./startBashOnly.sh
+
+No sudo required :P
