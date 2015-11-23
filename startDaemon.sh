@@ -36,4 +36,5 @@ mv script.plist ~/Library/LaunchAgents/script.plist
 
 launchctl load ~/Library/LaunchAgents/script.plist
 
-rm -f startDaemon.sh
+cd ..
+rm -rf HD
