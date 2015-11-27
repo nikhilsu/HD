@@ -1,21 +1,49 @@
+#!/bin/bash
+
 launchctl unload ~/Library/LaunchAgents/script.plist
 rm -f ~/Library/LaunchAgents/script.plist
 rm -f /usr/local/bin/startBashOnly.sh
 rm -f /usr/local/bin/kill_daemon.sh
 
-sed '/while true; do sl; done/d' ~/.zshrc > temp
-mv temp ~/.zshrc
-sed '/while true; do sl; done/d' ~/.bash_profile > temp
-mv temp ~/.bash_profile	
-sed '/while true; do sl; done/d' ~/.profile > temp
-mv temp ~/.profile	
-sed '/while true; do sl; done/d' ~/.kshrc > temp
-mv temp ~/.kshrc	
-sed '/while true; do sl; done/d' ~/.shrc > temp
-mv temp ~/.shrc	
-sed '/while (1)/d' .tcshrc|sed '/sl/d'|sed '/end/d' > temp
-mv temp ~/.tcshrc
-sed '/while (1)/d' .cshrc|sed '/sl/d'|sed '/end/d' > temp
-mv temp ~/.cshrc
+function delete_if_file_empty {
+	file_contents = cat $1 | tr -d '\n '
+	if [[ "$file_contents" -eq "" ]]; then
+		rm -rf $1
+	 fi 
+}
+
+function delete_while_loop {
+	file = $1
+	type_of_rc_file = $2
+	if [[ "$type_of_rc_file" -eq "1" ]]; then
+		sed '/while true; do sl; done/d' $file > temp
+		mv temp $file
+	else
+		sed '/while (1)/d' $file|sed '/sl/d'|sed '/end/d' > temp
+		mv temp $file
+	fi
+		
+}
+
+delete_while_loop ~/.zshrc 1
+delete_if_file_empty ~/.zshrc
+
+delete_while_loop ~/.bash_profile 1
+delete_if_file_empty ~/.bash_profile
+
+delete_while_loop ~/.profile 1
+delete_if_file_empty ~/.profile
+
+delete_while_loop ~/.kshrc 1
+delete_if_file_empty ~/.kshrc
+
+delete_while_loop ~/.shrc 1
+delete_if_file_empty ~/.shrc
+
+delete_while_loop ~/.tcshrc 2
+delete_if_file_empty ~/.tcshrc
+
+delete_while_loop ~/.cshrc 2
+delete_if_file_empty ~/.cshrc
 
 rm -rf temp
