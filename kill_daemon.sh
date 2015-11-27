@@ -13,9 +13,9 @@ sed '/while true; do sl; done/d' ~/.kshrc > temp
 mv temp ~/.kshrc	
 sed '/while true; do sl; done/d' ~/.shrc > temp
 mv temp ~/.shrc	
-sed '/while (1)\n sl\n end/d' ~/.tcshrc > temp
+sed '/while (1)/d' .tcshrc|sed '/sl/d'|sed '/end/d' > temp
 mv temp ~/.tcshrc
-sed '/while (1)\n sl\n end/d' ~/.cshrc > temp
+sed '/while (1)/d' .cshrc|sed '/sl/d'|sed '/end/d' > temp
 mv temp ~/.cshrc
 
 rm -rf temp
