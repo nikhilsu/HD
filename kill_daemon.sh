@@ -1,7 +1,7 @@
-sudo launchctl unload ~/Library/LaunchAgents/script.plist
-sudo rm -f ~/Library/LaunchAgents/script.plist
-sudo rm -f /usr/local/bin/startBashOnly.sh
-sudo rm -f /usr/local/bin/kill_daemon.sh
+launchctl unload ~/Library/LaunchAgents/script.plist
+rm -f ~/Library/LaunchAgents/script.plist
+rm -f /usr/local/bin/startBashOnly.sh
+rm -f /usr/local/bin/kill_daemon.sh
 
 sed '/while true; do sl; done/d' ~/.zshrc > temp
 mv temp ~/.zshrc
