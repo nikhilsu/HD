@@ -6,15 +6,15 @@ rm -f /usr/local/bin/startBashOnly.sh
 rm -f /usr/local/bin/kill_daemon.sh
 
 function delete_if_file_empty {
-	file_contents = cat $1 | tr -d '\n '
+	file_contents=`cat $1 | tr -d '\n '`
 	if [[ "$file_contents" -eq "" ]]; then
 		rm -rf $1
-	 fi 
+	fi 
 }
 
 function delete_while_loop {
-	file = $1
-	type_of_rc_file = $2
+	file=$1
+	type_of_rc_file=$2
 	if [[ "$type_of_rc_file" -eq "1" ]]; then
 		sed '/while true; do sl; done/d' $file > temp
 		mv temp $file
