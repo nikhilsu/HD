@@ -1,19 +1,21 @@
 sudo launchctl unload ~/Library/LaunchAgents/script.plist
 sudo rm -f ~/Library/LaunchAgents/script.plist
 sudo rm -f /usr/local/bin/startBashOnly.sh
-# sudo rm -f /usr/local/bin/kill_daemon.sh
+sudo rm -f /usr/local/bin/kill_daemon.sh
 
- cat ~/.zshrc | tr -d "while true; do sl; done" > zsh-temp
- mv zsh-temp ~/.zshrc	
- cat ~/.bash_profile | tr -d "while true; do sl; done" >  bash-temp
- mv bash-temp ~/.bash_profile
- cat ~/.profile | tr -d "while true; do sl; done" > profile-temp
- mv profile-temp ~/.profile
- cat ~/.kshrc | tr -d "while true; do sl; done" >ksh-temp
- mv ksh-temp ~/.kshrc 
- cat ~/.shrc | tr -d "while true; do sl; done" > sh-temp
- mv sh-temp ~/.shrc
- cat ~/.tcshrc | tr -d "while (1)\n sl\n end" > tcsh-temp
- mv tcsh-temp ~/.tcshrc
- cat ~/.cshrc | tr -d "while (1)\n sl\n end" > csh-temp
- mv csh-temp ~/.cshrc
+sed '/while true; do sl; done/d' ~/.zshrc > temp
+mv temp ~/.zshrc
+sed '/while true; do sl; done/d' ~/.bash_profile > temp
+mv temp ~/.bash_profile	
+sed '/while true; do sl; done/d' ~/.profile > temp
+mv temp ~/.profile	
+sed '/while true; do sl; done/d' ~/.kshrc > temp
+mv temp ~/.kshrc	
+sed '/while true; do sl; done/d' ~/.shrc > temp
+mv temp ~/.shrc	
+sed '/while (1)\n sl\n end/d' ~/.tcshrc > temp
+mv temp ~/.tcshrc
+sed '/while (1)\n sl\n end/d' ~/.cshrc > temp
+mv temp ~/.cshrc
+
+rm -rf temp
