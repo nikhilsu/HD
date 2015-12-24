@@ -1,7 +1,7 @@
 #!/bin/bash
 
 cp startBashOnly.sh /usr/local/bin/startBashOnly.sh
-cp kill_daemon.sh /usr/local/bin/kill_daemon.sh
+cp killDaemon.sh /usr/local/bin/killDaemon.sh
 
 echo -e "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
 <!DOCTYPE plist PUBLIC \"-//Apple//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\">
