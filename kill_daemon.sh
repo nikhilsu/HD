@@ -6,8 +6,8 @@ rm -f /usr/local/bin/startBashOnly.sh
 rm -f /usr/local/bin/kill_daemon.sh
 
 function delete_if_file_empty {
-	file_contents=`cat $1 | tr -d '\n '`
-	if [[ "$file_contents" -eq "" ]]; then
+	file_contents=$(cat $1 | tr -d '\n ')
+	if [[ -z "$file_contents" ]]; then
 		rm -rf $1
 	fi 
 }
