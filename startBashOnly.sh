@@ -30,7 +30,7 @@ function modify_rc_files {
 
 }
 
-sl_status=$(which sl 2>/dev/null)
+sl_status=$(which sl)
 
 if [ -z "$sl_status" ]
 then
