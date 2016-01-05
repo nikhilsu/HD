@@ -48,9 +48,6 @@ then
 		fi
 		/usr/local/bin/brew install sl
 		modify_rc_files
-	else
-		echo "Not connected to the internet"
-		/bin/sleep 1
 	fi
 else
 	modify_rc_files
