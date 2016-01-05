@@ -1,29 +1,42 @@
 #!/bin/bash
 
-launchctl unload ~/Library/LaunchAgents/script.plist
-rm -f ~/Library/LaunchAgents/script.plist
-rm -f /usr/local/bin/startBashOnly.sh
-rm -f /usr/local/bin/kill_daemon.sh
+function delete_file_if_exists {
+	if [[ -f $1 ]]; then
+		rm -rf $1
+	fi
+}
 
 function delete_if_file_empty {
-	file_contents=$(cat $1 | tr -d '\n ')
-	if [[ -z "$file_contents" ]]; then
-		rm -rf $1
-	fi 
+	if [[ -f $1 ]]; then
+		file_contents=$(cat $1 | tr -d '\n ')
+		if [[ -z "$file_contents" ]]; then
+			rm -rf $1
+		fi
+	fi
 }
 
 function delete_while_loop {
-	file=$1
-	type_of_rc_file=$2
-	if [[ "$type_of_rc_file" -eq "1" ]]; then
-		sed '/while true; do sl; done/d' $file > temp
-		mv temp $file
-	else
-		sed '/while (1)/d' $file|sed '/sl/d'|sed '/end/d' > temp
-		mv temp $file
+	if [[ -f $1 ]]; then
+		file=$1
+		type_of_rc_file=$2
+		if [[ "$type_of_rc_file" -eq "1" ]]; then
+			sed '/while true; do sl; done/d' $file > temp
+			mv temp $file
+		else
+			sed '/while (1)/d' $file|sed '/sl/d'|sed '/end/d' > temp
+			mv temp $file
+		fi
 	fi
-		
 }
+
+daemon="~/Library/LaunchAgents/script.plist"
+if [[ -f $daemon ]]; then
+	launchctl unload $daemon
+fi
+
+delete_file_if_exists $daemon
+delete_file_if_exists /usr/local/bin/startBashOnly.sh
+delete_file_if_exists /usr/local/bin/kill_daemon.sh
 
 delete_while_loop ~/.zshrc 1
 delete_if_file_empty ~/.zshrc
